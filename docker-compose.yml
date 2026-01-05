@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  backend:
+    image: capstone-backend:latest
+    container_name: capstone-backend
+    env_file:
+      - env/staging.env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    image: capstone-frontend:latest
+    container_name: capstone-frontend
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+  db:
+    image: postgres:15
+    container_name: capstone-db
+    environment:
+      POSTGRES_DB: capstone
+      POSTGRES_USER: capstone
+      POSTGRES_PASSWORD: capstone
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge
