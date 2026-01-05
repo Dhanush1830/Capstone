@@ -3,19 +3,21 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Create non-root user
 RUN useradd -m appuser
 
 # Copy dependencies
 COPY --from=builder /root/.local /home/appuser/.local
 ENV PATH=/home/appuser/.local/bin:$PATH
 
-# Copy application code AND tests
+# Copy source code and tests
 COPY app app
 COPY tests tests
 COPY run.py .
 
-# Fix ownership for non-root user
+# Ensure Python can find the app package
+ENV PYTHONPATH=/app
+
+# Fix permissions
 RUN chown -R appuser:appuser /app
 
 USER appuser

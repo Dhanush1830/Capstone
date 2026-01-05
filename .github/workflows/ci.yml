@@ -21,4 +21,4 @@ jobs:
       run: docker build -t capstone-frontend ./frontend
 
     - name: Run backend unit tests
-      run: docker run capstone-backend pytest -q --disable-warnings --cache-clear
+      run: docker run --rm capstone-backend pytest tests -v
