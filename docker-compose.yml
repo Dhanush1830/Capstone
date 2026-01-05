@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   backend:
-    image: capstone-backend:latest
+    image: <dockerhub-username>/capstone-backend:staging
     container_name: capstone-backend
     env_file:
       - env/staging.env
@@ -14,7 +14,7 @@ services:
       - app-network
 
   frontend:
-    image: capstone-frontend:latest
+    image: <dockerhub-username>/capstone-frontend:staging
     container_name: capstone-frontend
     ports:
       - "80:80"
