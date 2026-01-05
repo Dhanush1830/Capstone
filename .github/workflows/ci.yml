@@ -14,9 +14,14 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Build backend image
-      run: docker build -t capstone-backend ./backend
+    - name: Build backend image (load locally)
+      uses: docker/build-push-action@v5
+      with:
+        context: ./backend
+        tags: capstone-backend:staging
+        load: true
 
+        
     - name: Install Trivy
       run: |
         sudo apt-get update
@@ -42,3 +47,7 @@ jobs:
 
     - name: Run backend unit tests
       run: docker run --rm capstone-backend pytest tests -v
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+  
